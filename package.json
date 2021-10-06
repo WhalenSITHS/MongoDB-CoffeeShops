@@ -1,0 +1,27 @@
+{
+  "name": "MongoDB-CoffeeShops",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WhalenSITHS/MongoDB-CoffeeShops.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WhalenSITHS/MongoDB-CoffeeShops/issues"
+  },
+  "homepage": "https://github.com/WhalenSITHS/MongoDB-CoffeeShops#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.9"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}

@@ -14,6 +14,7 @@ app.use(express.urlencoded());
 app.use("/", routes);
 //Global Route Error Handler
 app.use(errorHandlers.notFound);
+app.use(errorHandlers.catchErrors);
 app.listen(port, () => {
   console.log(`Server is up on port ${port}`);
 });

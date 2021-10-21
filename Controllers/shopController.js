@@ -26,3 +26,13 @@ exports.getShops = async (req, res) => {
     res.status(500).json(error);
   }
 };
+exports.updateShop = async (req, res) => {
+  // find and update the store
+  const store = await Shop.findOneAndUpdate({ _id: req.params.id }, req.body, {
+    new: true, // return the new store instead of the old one
+    runValidators: true, //built into mongoose, validates update fits the model
+  }).exec();
+
+  res.json(store);
+  // Redriect them the store and tell them it worked
+};

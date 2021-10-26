@@ -5,4 +5,5 @@ router.get("/", shopController.homePage); //middlware runs, then when complete, 
 router.post("/add", shopController.createShop);
 router.get("/shops", shopController.getShops);
 router.patch("/shops/:id", shopController.updateShop);
+router.delete("/shops/:id", shopController.deleteShop);
 module.exports = router;

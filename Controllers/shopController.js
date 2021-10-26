@@ -36,3 +36,15 @@ exports.updateShop = async (req, res) => {
   res.json(store);
   // Redriect them the store and tell them it worked
 };
+
+exports.deleteShop = async (req, res) => {
+  try {
+    const shop = await Shop.findByIdAndDelete(req.params.id);
+    if (!shop) {
+      res.status(404).send();
+    }
+    res.send(`${shop} was removed`);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};

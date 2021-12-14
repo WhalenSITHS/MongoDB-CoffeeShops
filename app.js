@@ -1,5 +1,5 @@
 const express = require("express");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const app = express();
 require("./db/mongoose"); //ensures mongoose runs and connects
 const routes = require("./Routes/index");

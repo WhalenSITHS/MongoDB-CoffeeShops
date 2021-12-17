@@ -1,8 +1,10 @@
 const express = require("express");
 const port = process.env.PORT || 3000;
 const app = express();
+const cors = require("cors");
 require("./db/mongoose"); //ensures mongoose runs and connects
 const routes = require("./Routes/index");
+app.use(cors());
 // Takes the raw requests and turns them into usable properties on req.body
 /* app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); */

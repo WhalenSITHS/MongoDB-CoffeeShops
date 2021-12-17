@@ -2,6 +2,7 @@ const express = require("express");
 const port = process.env.PORT || 3000;
 const app = express();
 const cors = require("cors");
+require("./config/passport-setup");
 require("./db/mongoose"); //ensures mongoose runs and connects
 const routes = require("./Routes/index");
 app.use(cors());

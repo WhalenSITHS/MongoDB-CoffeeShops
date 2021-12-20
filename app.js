@@ -29,8 +29,19 @@ const checkJwt = jwt({
 // Enable the use of request body parsing middleware - code omitted
 
 // create timesheets API endpoint - code omitted
-app.get("/authorized", checkJwt, function (req, res) {
-  res.send("Secured Resource");
+app.get("/authorized", checkJwt, async function (req, res) {
+  try {
+    res.json("Secured Resource");
+  } catch (error) {
+    console.log(error);
+  }
+});
+app.get("/", async function (req, res) {
+  try {
+    res.json("Secured Resource");
+  } catch (error) {
+    console.log(error);
+  }
 });
 app.listen(port, () => {
   console.log(`Server is up on port ${port}`);

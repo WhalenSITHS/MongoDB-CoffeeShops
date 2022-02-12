@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 require("./db/mongoose"); //ensures mongoose runs and connects
 const routes = require("./Routes/index");
+var auth = require("./Routes/auth");
 app.use(cors());
 // Takes the raw requests and turns them into usable properties on req.body
 /* app.use(bodyParser.json());
@@ -14,7 +15,7 @@ app.use(express.urlencoded());
 //routes, imported from routes folder above
 
 app.use("/", routes);
-
+app.use("/", auth);
 app.listen(port, () => {
   console.log(`Server is up on port ${port}`);
 });

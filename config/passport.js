@@ -1,6 +1,7 @@
 const JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 require("dotenv").config({ path: "variables.env" }); //get secret key
 // load up the user model
 const User = require("../Models/User");
@@ -36,12 +37,15 @@ module.exports = (passport) => {
 
 module.exports = async function generateToken(user) {
   const _id = user._id;
+  const expiresIn = "1d";
   const payload = {
     sub: _id,
     iat: Date.now(),
   };
 
-  const signedToken = jwt.sign(payload, `${process.env.SECRET}`);
+  const signedToken = jwt.sign(payload, `${process.env.SECRET}`, {
+    expiresIn: expiresIn,
+  });
   console.log(signedToken);
   const token = "Bearer " + signedToken;
   return token;

@@ -54,14 +54,9 @@ router.post("/login", function (req, res) {
     }
   );
 });
-router.get(
-  "/protected",
-  passport.authenticate("jwt", { session: false }),
-  (req, res, next) => {
-    res.status(200).json({
-      success: true,
-      msg: "You are successfully authenticated to this route!",
-    });
-  }
-);
+const authenticateWithJwt = require("../config/passport");
+
+app.get("/protected", authenticateWithJwt, (req, res) => {
+  res.status(200).json({ message: "it works!" });
+});
 module.exports = router;

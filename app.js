@@ -9,10 +9,11 @@ const routes = require("./Routes/index");
 var auth = require("./Routes/auth");
 app.use(cors());
 // Pass the global passport object into the configuration function
-require("./config/passport")(passport);
+const startPassport = require("./config/passport");
 
 // This will initialize the passport object on every request
 app.use(passport.initialize());
+startPassport(passport);
 // Takes the raw requests and turns them into usable properties on req.body
 /* app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); */

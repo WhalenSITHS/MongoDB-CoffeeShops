@@ -38,7 +38,21 @@ module.exports = (passport) => {
     })
   );
 };
+module.exports = authenticateWithJwt = (req, res, next) => {
+  passport.authenticate("jwt", { session: false }, (error, jwt_payload) => {
+    if (error) {
+      return next(error);
+    }
 
+    User.findOne({ id: jwt_payload.sub }, (err, user) => {
+      if (err || !user) {
+        return next(err || new Error("Could not find user"));
+      }
+
+      next(user);
+    });
+  })(req, res);
+};
 module.exports = async function generateToken(user) {
   const _id = user._id;
   const expiresIn = "1d";
@@ -51,6 +65,6 @@ module.exports = async function generateToken(user) {
     expiresIn: expiresIn,
   });
   console.log(signedToken);
-  const token = "Bearer " + signedToken;
+  const token = "bearer " + signedToken;
   return token;
 };

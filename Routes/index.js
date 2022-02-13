@@ -2,6 +2,7 @@ const express = require("express");
 const router = new express.Router();
 const shopController = require("../Controllers/shopController");
 var passport = require("passport");
+
 require("../config/passport")(passport);
 getToken = function (headers) {
   if (headers && headers.authorization) {

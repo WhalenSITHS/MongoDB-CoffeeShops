@@ -1,11 +1,12 @@
-const mongoose = require("mongoose");
 const passport = require("passport");
-const settings = require("../config/settings");
+const JwtStrategy = require("passport-jwt").Strategy,
+  ExtractJwt = require("passport-jwt").ExtractJwt;
 require("../config/passport")(passport);
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const User = require("../Models/User");
+require("../config/passport")(passport);
 const generateToken = require("../config/passport");
 router.post("/register", function (req, res) {
   if (!req.body.username || !req.body.password) {
@@ -56,5 +57,14 @@ router.post("/login", function (req, res) {
     }
   );
 });
-
+router.get(
+  "/protected",
+  passport.authenticate("jwt", { session: false }),
+  (req, res, next) => {
+    res.status(200).json({
+      success: true,
+      msg: "You are successfully authenticated to this route!",
+    });
+  }
+);
 module.exports = router;

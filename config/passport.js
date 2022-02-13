@@ -1,14 +1,18 @@
 const JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
+const fs = require("fs");
+const path = require("path");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const pathToKey = path.join(__dirname, "..", "id_rsa_pub.pem");
+const PUB_KEY = fs.readFileSync(pathToKey, "utf8");
 require("dotenv").config({ path: "variables.env" }); //get secret key
 // load up the user model
 const User = require("../Models/User");
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: `${process.env.SECRET}`,
+  secretOrKey: PUB_KEY,
   algorithms: ["RS256"],
 };
 

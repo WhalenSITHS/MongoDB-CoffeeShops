@@ -1,12 +1,9 @@
-const passport = require("passport");
-const JwtStrategy = require("passport-jwt").Strategy,
-  ExtractJwt = require("passport-jwt").ExtractJwt;
-require("../config/passport")(passport);
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const router = express.Router();
 const User = require("../Models/User");
+const passport = require("passport");
 require("../config/passport")(passport);
+
 const generateToken = require("../config/passport");
 router.post("/register", function (req, res) {
   if (!req.body.username || !req.body.password) {

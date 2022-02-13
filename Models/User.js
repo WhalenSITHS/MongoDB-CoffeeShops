@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt-nodejs");
-
+require("dotenv").config({ path: "variables.env" }); //get secret key
 const UserSchema = new Schema({
   username: {
     type: String,

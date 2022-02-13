@@ -1,26 +1,48 @@
 const JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
-
+const jwt = require("jsonwebtoken");
+require("dotenv").config({ path: "variables.env" }); //get secret key
 // load up the user model
 const User = require("../Models/User");
-const settings = require("../config/settings"); // get settings file
 
-module.exports = function (passport) {
-  var opts = {};
-  opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
-  opts.secretOrKey = settings.secret;
+const options = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: `${process.env.SECRET}`,
+  algorithms: ["RS256"],
+};
+
+module.exports = (passport) => {
+  // The JWT payload is passed into the verify callback
   passport.use(
-    new JwtStrategy(opts, function (jwt_payload, done) {
-      User.findOne({ id: jwt_payload.id }, function (err, user) {
+    new JwtStrategy(options, function (jwt_payload, done) {
+      console.log(jwt_payload);
+
+      // We will assign the `sub` property on the JWT to the database ID of user
+      User.findOne({ _id: jwt_payload.sub }, function (err, user) {
+        // This flow look familiar?  It is the same as when we implemented
+        // the `passport-local` strategy
         if (err) {
           return done(err, false);
         }
         if (user) {
-          done(null, user);
+          return done(null, user);
         } else {
-          done(null, false);
+          return done(null, false);
         }
       });
     })
   );
+};
+
+module.exports = async function generateToken(user) {
+  const _id = user._id;
+  const payload = {
+    sub: _id,
+    iat: Date.now(),
+  };
+
+  const signedToken = jwt.sign(payload, `${process.env.SECRET}`);
+  console.log(signedToken);
+  const token = "Bearer " + signedToken;
+  return token;
 };

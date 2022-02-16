@@ -10,6 +10,7 @@ router.delete("/shops/:id", shopController.deleteShop);
 
 router.post("/register", authController.register);
 router.post("/login", authController.login);
+router.get("/protected", authController.authCheck, authController.protected);
 /* router.post("/login", function (req, res) {
   User.findOne(
     {

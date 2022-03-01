@@ -31,7 +31,8 @@ const checkJwt = jwt({
 // create timesheets API endpoint - code omitted
 app.get("/authorized", checkJwt, async function (req, res) {
   try {
-    res.json("Secured Resource");
+    console.log(req.user);
+    res.json(req.user);
   } catch (error) {
     console.log(error);
   }
